@@ -24,8 +24,13 @@ EvpGcmDecrypter::EvpGcmDecrypter(const std::vector<uint8_t>& key, const std::vec
 
 std::vector<std::byte> EvpGcmDecrypter::decrypt(const std::vector<std::byte>& cipherData)
 {
-    std::vector<std::byte> plainData(cipherData.size());
-    EvpDecryptionCtx::decrypt(cipherData, plainData);
+    return decrypt((uint8_t*)cipherData.data(), cipherData.size());
+}
+
+std::vector<std::byte> EvpGcmDecrypter::decrypt(const uint8_t* pData, size_t dataLength)
+{
+    std::vector<std::byte> plainData(dataLength);
+    EvpDecryptionCtx::decrypt(pData, dataLength, plainData);
     return plainData;
 }
 

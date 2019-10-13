@@ -13,6 +13,7 @@ class EvpGcmDecrypter : public EvpDecryptionCtx
 //    EvpGcmDecrypter& operator=(EvpGcmDecrypter&& other) noexcept;
 
     std::vector<std::byte> decrypt(const std::vector<std::byte>& cipherData);
+    std::vector<std::byte> decrypt(const uint8_t* pData, size_t dataLength);
     void setTag(const std::vector<std::byte>& tag);
     void final();
 };

@@ -16,6 +16,7 @@ class EvpGcmEncrypter : public EvpEncryptionCtx
     ~EvpGcmEncrypter() = default;
 
     std::vector<std::byte> encrypt(const std::vector<std::byte>& plainData);
+    std::vector<std::byte> encrypt(const uint8_t* pData, size_t dataLength);
     void final();
     std::vector<std::byte> getTag();
 };

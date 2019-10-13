@@ -30,6 +30,13 @@ std::vector<std::byte> EvpGcmEncrypter::encrypt(const std::vector<std::byte>& pl
     return cipherData;
 }
 
+std::vector<std::byte> EvpGcmEncrypter::encrypt(const uint8_t* pData, size_t dataLength)
+{
+    std::vector<std::byte> cipherData(dataLength);
+    EvpEncryptionCtx::encrypt(pData, dataLength, cipherData);
+    return cipherData;
+}
+
 void EvpGcmEncrypter::final()
 {
     int len;
