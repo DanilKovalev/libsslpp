@@ -41,6 +41,16 @@ void EvpGcmDecrypter::setTag(const std::vector<std::byte>& tag)
     EvpCipherCtx::ctrl(EVP_CTRL_GCM_SET_TAG, 16, (void*)tag.data());
 }
 
+void EvpGcmDecrypter::setTag(const uint8_t* tag)
+{
+    EvpCipherCtx::ctrl(EVP_CTRL_GCM_SET_TAG, getTagLength(), (void*)tag);
+}
+
+size_t EvpGcmDecrypter::getTagLength() const
+{
+    return 16;
+}
+
 void EvpGcmDecrypter::final()
 {
     int len;

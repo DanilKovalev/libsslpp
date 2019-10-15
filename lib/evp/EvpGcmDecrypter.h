@@ -15,5 +15,7 @@ class EvpGcmDecrypter : public EvpDecryptionCtx
     std::vector<std::byte> decrypt(const std::vector<std::byte>& cipherData);
     std::vector<std::byte> decrypt(const uint8_t* pData, size_t dataLength);
     void setTag(const std::vector<std::byte>& tag);
+    void setTag(const uint8_t* tag);
+    size_t getTagLength() const;
     void final();
 };

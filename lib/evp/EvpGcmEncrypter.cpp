@@ -45,7 +45,18 @@ void EvpGcmEncrypter::final()
 
 std::vector<std::byte> EvpGcmEncrypter::getTag()
 {
-    std::vector<std::byte> tag(16,std::byte(0));
+    std::vector<std::byte> tag(getTagLength(), std::byte(0));
     ctrl(EVP_CTRL_GCM_GET_TAG, tag.size(), (uint8_t*)tag.data());
     return tag;
 }
+
+void EvpGcmEncrypter::getTag(uint8_t* tag)
+{
+    ctrl(EVP_CTRL_GCM_GET_TAG, getTagLength(), tag);
+}
+
+size_t EvpGcmEncrypter::getTagLength() const
+{
+    return 16;
+}
+
