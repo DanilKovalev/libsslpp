@@ -16,6 +16,7 @@ class EvpDigest
 
     void Update(const uint8_t* data, size_t dataLength);
     std::vector<uint8_t> Final();
+    size_t GetHashSize() const;
 
     ~EvpDigest();
 

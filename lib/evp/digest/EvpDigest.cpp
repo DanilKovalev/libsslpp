@@ -22,8 +22,7 @@ void EvpDigest::Update(const uint8_t* data, size_t dataLength)
 
 std::vector<uint8_t> EvpDigest::Final()
 {
-    int size = EVP_MD_size(EVP_MD_CTX_md(m_pCtx));
-    std::vector<uint8_t> result(size);
+    std::vector<uint8_t> result(GetHashSize());
 
     unsigned int resSize;
     if (EVP_DigestFinal(m_pCtx, result.data(), &resSize) != 1)
@@ -35,4 +34,9 @@ std::vector<uint8_t> EvpDigest::Final()
 EvpDigest::~EvpDigest()
 {
     EVP_MD_CTX_destroy(m_pCtx);
+}
+
+size_t EvpDigest::GetHashSize() const
+{
+    return EVP_MD_size(EVP_MD_CTX_md(m_pCtx));
 }
