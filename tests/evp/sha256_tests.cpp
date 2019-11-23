@@ -6,10 +6,7 @@
 
 static std::vector<uint8_t> calcHash(const std::string& input)
 {
-    Sha256Digest digest;
-    digest.Update((const uint8_t*)input.c_str(), input.size());
-    return digest.Final();
-
+    return EvpDigest::CalcHash<Sha256Digest>((const uint8_t*)input.c_str(), input.size());
 }
 
 TEST_CASE("Sha256", "[digest][evp]")

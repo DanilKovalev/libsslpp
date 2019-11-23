@@ -19,6 +19,16 @@ class EvpDigest
 
     ~EvpDigest();
 
+    template <typename Hash>
+    static std::vector<uint8_t> CalcHash(const uint8_t* data, size_t dataLength)
+    {
+        Hash hash;
+        hash.Update(data, dataLength);
+        return hash.Final();
+    }
+
   private:
     EVP_MD_CTX *m_pCtx;
 };
+
+
