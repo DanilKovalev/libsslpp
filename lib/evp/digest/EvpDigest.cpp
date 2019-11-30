@@ -31,6 +31,12 @@ std::vector<uint8_t> EvpDigest::Final()
     return result;
 }
 
+void EvpDigest::Reset()
+{
+    if (EVP_MD_CTX_reset(m_pCtx) != 1)
+        throw SslException("Failed to reset digest contxts.");
+}
+
 EvpDigest::~EvpDigest()
 {
     EVP_MD_CTX_destroy(m_pCtx);
