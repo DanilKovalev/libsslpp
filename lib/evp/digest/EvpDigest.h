@@ -19,7 +19,7 @@ class EvpDigest
     void Reset();
     size_t GetHashSize() const;
 
-    ~EvpDigest();
+    virtual ~EvpDigest();
 
     template <typename Hash>
     static std::vector<uint8_t> CalcHash(const uint8_t* data, size_t dataLength)
