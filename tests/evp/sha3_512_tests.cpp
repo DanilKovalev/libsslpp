@@ -1,4 +1,4 @@
-#include "evp/digest/Sha3_512Digest.h"
+#include "evp/digest/Digests.h"
 #include <string>
 #include <catch2/catch.hpp>
 

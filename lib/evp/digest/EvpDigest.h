@@ -3,14 +3,17 @@
 #include <openssl/evp.h>
 
 #include <vector>
+#include "utils/ObjectHolder.h"
+#include "utils/ObjectHelper.h"
 
-class EvpDigest
+class EvpDigest : public ObjectHolder<EVP_MD_CTX, EvpDigest>
 {
-  protected:
-    explicit EvpDigest();
-    void Init(const EVP_MD* type);
+    using RawType = EVP_MD_CTX;
+    friend class ObjectHelper<EvpDigest>;
 
   public:
+    explicit EvpDigest(const EVP_MD* type);
+
     EvpDigest(const EvpDigest&) = delete;
     EvpDigest& operator=(const EvpDigest&) = delete;
 
@@ -19,7 +22,8 @@ class EvpDigest
     void Reset();
     size_t GetHashSize() const;
 
-    virtual ~EvpDigest();
+    static RawType* duplicate(RawType* other);
+    static void destroy(RawType* raw) noexcept;
 
     template <typename Hash>
     static std::vector<uint8_t> CalcHash(const uint8_t* data, size_t dataLength)
@@ -29,8 +33,9 @@ class EvpDigest
         return hash.Final();
     }
 
-  private:
-    EVP_MD_CTX *m_pCtx;
-};
+    virtual ~EvpDigest() = default;
 
+  private:
+    static RawType* create();
+};
 
