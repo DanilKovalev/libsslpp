@@ -1,4 +1,5 @@
 #include "evp/digest/Digests.h"
+#include "../template_tests.h"
 #include <string>
 #include <catch2/catch.hpp>
 
@@ -36,4 +37,11 @@ TEST_CASE("Md5", "[digest][evp]")
                                         0x87, 0x6c, 0x66, 0x4a};
         CHECK(calcHash(input) == expected);
     }
+}
+
+TEST_CASE("Md5 memory test", "[digest][evp]")
+{
+    Md5Digest digest;
+    Md5Digest digest2(digest);
+    digest = digest2;
 }

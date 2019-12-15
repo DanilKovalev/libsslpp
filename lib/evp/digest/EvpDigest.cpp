@@ -13,6 +13,11 @@ EvpDigest::EvpDigest(const EVP_MD* type)
         throw SslException("Failed to init evp digest.");
 }
 
+EvpDigest::EvpDigest(const EvpDigest& other)
+  : ObjectHolder(duplicate(other.m_raw), true)
+{
+}
+
 void EvpDigest::Update(const uint8_t* data, size_t dataLength)
 {
     if (EVP_DigestUpdate(m_raw, (void*)data, dataLength) != 1)

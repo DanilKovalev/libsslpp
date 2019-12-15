@@ -14,8 +14,13 @@ class EvpDigest : public ObjectHolder<EVP_MD_CTX, EvpDigest>
   public:
     explicit EvpDigest(const EVP_MD* type);
 
-    EvpDigest(const EvpDigest&) = delete;
-    EvpDigest& operator=(const EvpDigest&) = delete;
+    EvpDigest(const EvpDigest&);
+
+    EvpDigest& operator=(const EvpDigest& other)
+    {
+        ObjectHolder::operator=(other);
+        return *this;
+    }
 
     void Update(const uint8_t* data, size_t dataLength);
     std::vector<uint8_t> Final();
