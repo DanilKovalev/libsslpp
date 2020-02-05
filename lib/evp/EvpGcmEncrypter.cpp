@@ -23,16 +23,16 @@ EvpGcmEncrypter::EvpGcmEncrypter(const std::vector<uint8_t>& key, const std::vec
     encryptInitEx(nullptr, nullptr, nullptr, (uint8_t*)iv.data());
 }
 
-std::vector<std::byte> EvpGcmEncrypter::encrypt(const std::vector<std::byte>& plainData)
+std::vector<uint8_t> EvpGcmEncrypter::encrypt(const std::vector<uint8_t>& plainData)
 {
-    std::vector<std::byte> cipherData(plainData.size());
+    std::vector<uint8_t> cipherData(plainData.size());
     EvpEncryptionCtx::encrypt(plainData, cipherData);
     return cipherData;
 }
 
-std::vector<std::byte> EvpGcmEncrypter::encrypt(const uint8_t* pData, size_t dataLength)
+std::vector<uint8_t> EvpGcmEncrypter::encrypt(const uint8_t* pData, size_t dataLength)
 {
-    std::vector<std::byte> cipherData(dataLength);
+    std::vector<uint8_t> cipherData(dataLength);
     EvpEncryptionCtx::encrypt(pData, dataLength, cipherData);
     return cipherData;
 }
@@ -43,9 +43,9 @@ void EvpGcmEncrypter::final()
     encryptFinalEx(nullptr, &len);
 }
 
-std::vector<std::byte> EvpGcmEncrypter::getTag()
+std::vector<uint8_t> EvpGcmEncrypter::getTag()
 {
-    std::vector<std::byte> tag(getTagLength(), std::byte(0));
+    std::vector<uint8_t> tag(getTagLength(), uint8_t(0));
     ctrl(EVP_CTRL_GCM_GET_TAG, tag.size(), (uint8_t*)tag.data());
     return tag;
 }

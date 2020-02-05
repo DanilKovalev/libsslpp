@@ -16,14 +16,14 @@ TEST_CASE("GCM test", "[gcm]")
 
     /* Message to be encrypted */
     std::string plaintext = "The quick brown fox jumps over the lazy dog";
-    std::vector<std::byte> vecPlainText;
+    std::vector<uint8_t> vecPlainText;
     std::transform(
-      plaintext.cbegin(), plaintext.cend(), std::back_inserter(vecPlainText), [](char c) { return std::byte(c); });
+      plaintext.cbegin(), plaintext.cend(), std::back_inserter(vecPlainText), [](char c) { return uint8_t(c); });
 
     /* Additional data */
     std::string aad = "The five boxing wizards jump quickly.";
-    std::vector<std::byte> vecAad;
-    std::transform(aad.cbegin(), aad.cend(), std::back_inserter(vecAad), [](char c) { return std::byte(c); });
+    std::vector<uint8_t> vecAad;
+    std::transform(aad.cbegin(), aad.cend(), std::back_inserter(vecAad), [](char c) { return uint8_t(c); });
 
     EvpGcmEncrypter enc(vecKey, vecIV);
     enc.updateAad(vecAad);
@@ -43,7 +43,7 @@ TEST_CASE("GCM test", "[gcm]")
 
     SECTION("Forged check")
     {
-        std::for_each(tag.begin(), tag.end(), [](std::byte& val) { val = std::byte(0); });
+        std::for_each(tag.begin(), tag.end(), [](uint8_t& val) { val = uint8_t(0); });
         EvpGcmDecrypter dec(vecKey, vecIV);
         dec.updateAad(vecAad);
         dec.decrypt(cipher);

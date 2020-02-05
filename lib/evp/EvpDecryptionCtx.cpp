@@ -5,7 +5,7 @@ EvpDecryptionCtx::EvpDecryptionCtx()
 {
 }
 
-void EvpDecryptionCtx::updateAad(const std::vector<std::byte>& data)
+void EvpDecryptionCtx::updateAad(const std::vector<uint8_t>& data)
 {
     updateAad((uint8_t*)data.data(), data.size());
 }
@@ -16,12 +16,12 @@ void EvpDecryptionCtx::updateAad(const uint8_t* aad, size_t size)
     decryptUpdate(nullptr, &len, aad, size);
 }
 
-size_t EvpDecryptionCtx::decrypt(const std::vector<std::byte>& cipherData, std::vector<std::byte>& plainData)
+size_t EvpDecryptionCtx::decrypt(const std::vector<uint8_t>& cipherData, std::vector<uint8_t>& plainData)
 {
     return decrypt((const uint8_t*)cipherData.data(), cipherData.size(), plainData);
 }
 
-size_t EvpDecryptionCtx::decrypt(const uint8_t* pData, size_t dataLength, std::vector<std::byte>& plainData)
+size_t EvpDecryptionCtx::decrypt(const uint8_t* pData, size_t dataLength, std::vector<uint8_t>& plainData)
 {
     return decrypt((uint8_t*)plainData.data(), plainData.size(), pData, dataLength);
 }

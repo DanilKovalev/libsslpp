@@ -12,9 +12,9 @@ class EvpGcmDecrypter : public EvpDecryptionCtx
     EvpGcmDecrypter& operator=(const EvpGcmDecrypter& other) = delete;
 //    EvpGcmDecrypter& operator=(EvpGcmDecrypter&& other) noexcept;
 
-    std::vector<std::byte> decrypt(const std::vector<std::byte>& cipherData);
-    std::vector<std::byte> decrypt(const uint8_t* pData, size_t dataLength);
-    void setTag(const std::vector<std::byte>& tag);
+    std::vector<uint8_t> decrypt(const std::vector<uint8_t>& cipherData);
+    std::vector<uint8_t> decrypt(const uint8_t* pData, size_t dataLength);
+    void setTag(const std::vector<uint8_t>& tag);
     void setTag(const uint8_t* tag);
     size_t getTagLength() const;
     void final();
