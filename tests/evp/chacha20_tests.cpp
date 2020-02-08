@@ -1,4 +1,5 @@
 #include "evp/EvpChacha20Encrypter.h"
+#include "evp/EvpChacha20Decrypter.h"
 
 #include <string>
 
@@ -27,11 +28,15 @@ TEST_CASE("ChaCha20 test", "[chacha20]")
                                          0xc3, 0x87, 0xb6, 0x69, 0xb2, 0xee, 0x65, 0x86};
 
         std::vector<uint8_t> data(expected.size());
-        EvpChacha20Encrypter en(key, iv);
-        std::vector<uint8_t> encrypted = en.encrypt(data);
+        EvpChacha20Encrypter encrypter(key, iv);
+        std::vector<uint8_t> encrypted = encrypter.encrypt(data);
 
         REQUIRE(encrypted.size() == data.size());
         REQUIRE(encrypted == expected);
+
+        EvpChacha20Decryption decrypter(key, iv);
+        std::vector<uint8_t> plainData = decrypter.decrypt(encrypted);
+        REQUIRE(plainData == data);
     }
 
     SECTION("Second vector")
@@ -59,6 +64,10 @@ TEST_CASE("ChaCha20 test", "[chacha20]")
 
         REQUIRE(encrypted.size() == data.size());
         REQUIRE(encrypted == expected);
+
+        EvpChacha20Decryption decrypter(key, iv);
+        std::vector<uint8_t> plainData = decrypter.decrypt(encrypted);
+        REQUIRE(plainData == data);
     }
 
     SECTION("Third vector")
@@ -86,6 +95,10 @@ TEST_CASE("ChaCha20 test", "[chacha20]")
 
         REQUIRE(encrypted.size() == data.size());
         REQUIRE(encrypted == expected);
+
+        EvpChacha20Decryption decrypter(key, iv);
+        std::vector<uint8_t> plainData = decrypter.decrypt(encrypted);
+        REQUIRE(plainData == data);
     }
 
     SECTION("5 vector")
@@ -113,5 +126,9 @@ TEST_CASE("ChaCha20 test", "[chacha20]")
 
         REQUIRE(encrypted.size() == data.size());
         REQUIRE(encrypted == expected);
+
+        EvpChacha20Decryption decrypter(key, iv);
+        std::vector<uint8_t> plainData = decrypter.decrypt(encrypted);
+        REQUIRE(plainData == data);
     }
 }
